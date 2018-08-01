@@ -191,3 +191,9 @@ echo -e \n$(date)\n >> logs/apis.log; apis 2>&1 | tee -a logs/apis.log
 echo -e \n$(date)\n >> logs/proxies.log; proxy 2>&1 | tee -a logs/proxies.log
 echo -e \n$(date)\n >> logs/keycloak.log; keycloak 2>&1 | tee -a logs/keycloak.log
 echo -e \n$(date)\n >> logs/badger.log; badger 2>&1 | tee -a logs/badger.log
+
+[ -f ~/badger_token.txt ] ||  echo "badger auth token (~/badger_token.txt) not found" || exit 1
+badger_token=$(cat ~/badger_token.txt | cut -d '"' -f 4)
+sunbird_api_auth_token=$(cat ~/jwt_token_player.txt|sed 's/ //g')
+echo "Deploy learner service"
+ansible-playbook -i $ansible_variable_path ../ansible/deploy.yml --tags "stack-sunbird" --extra-vars "hub_org=sunbird image_name=learner_service image_tag=${LEARNER_SERVICE_VERSION} service_name=learner-service deploy_learner=True  sunbird_api_auth_token=${sunbird_api_auth_token} vault_badging_authorization_key=${badger_token}" --extra-vars @config
