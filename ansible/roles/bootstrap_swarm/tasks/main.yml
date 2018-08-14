@@ -8,6 +8,4 @@
   with_items:
     - "{{networks}}"
   ignore_errors: true
-  tagsj
-      - create_network
   run_once: true
