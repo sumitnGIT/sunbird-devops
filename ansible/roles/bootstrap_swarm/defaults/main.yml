@@ -1,3 +1,4 @@
 ---
 networks:
   - application_default
+  - jenkins_default
