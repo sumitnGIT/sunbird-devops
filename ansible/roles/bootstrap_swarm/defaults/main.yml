@@ -1,5 +1,6 @@
 ---
 networks:
+  - {name: 'ingress', subnet: '11.11.0.0/16'}
   - {name: 'application_default', subnet: '11.11.1.0/24'}
   - {name: 'jenkins_default', subnet: '11.11.2.0/24' }
   - {name: 'monitoring', subnet: '11.11.3.0/24' }

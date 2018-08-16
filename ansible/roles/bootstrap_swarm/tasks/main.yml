@@ -2,9 +2,17 @@
   apt: name=jq state=present
   become: yes
 
+- name: Delete networks
+  # Limiting n/w because of https://github.com/moby/moby/issues/30820
+  shell: "docker network rm {{item.name}}"
+  with_items:
+    - "{{networks}}"
+  ignore_errors: true
+  run_once: true
+
 - name: Create networks
   # Limiting n/w because of https://github.com/moby/moby/issues/30820
-  shell: "docker network create --subnet {{item.subnet}} --driver overlay {{item.name}}"
+  shell: "docker network create --subnet={{item.subnet}} --driver=overlay {{item.name}}"
   with_items:
     - "{{networks}}"
   ignore_errors: true
