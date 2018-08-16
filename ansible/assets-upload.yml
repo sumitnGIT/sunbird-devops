@@ -1,6 +1,7 @@
 ---
-- hosts: localhost
+- hosts: swarm-manager
   vars_files:
     - ['{{inventory_dir}}/secrets.yml', 'secrets/{{env}}.yml']
   roles:
     - assets-upload-azure
+  run_once: true
