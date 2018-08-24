@@ -73,3 +73,10 @@ telemetry_local_storage_enabled:
 telemetry_local_storage_type:
 telemetry_kafka_broker_list:
 telemetry_kafka_topic:
+
+encryption_replicas: 1
+encryption_reservation_memory: 256m
+encryption_limit_memory: 256m
+encryption_limit_cpu: 1
+encryption_reservation_cpu: 1
+
