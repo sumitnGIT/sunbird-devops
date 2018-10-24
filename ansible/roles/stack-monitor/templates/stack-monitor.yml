@@ -170,7 +170,7 @@ services:
         command:
             - '-extend.query-path=/etc/postgres_exporter/postgresmasterqueries.yml'
         environment:
-            - DATA_SOURCE_NAME=postgresql://{{ postgres_exporter_user }}:{{ postgres_exporter_password }}@{{ groups['postgresql-master'][0]}}:{{ postgres_exporter_postgres_port }}/postgres?sslmode=disable
+            - DATA_SOURCE_NAME=postgresql://{{ postgres_exporter_user }}:{{ postgres_exporter_password }}@{{ groups['postgresql-master']}}:{{ postgres_exporter_postgres_port }}/postgres?sslmode=disable
         configs:
             - source: postgresmasterqueries.yml
               target: /etc/postgres_exporter/postgresmasterqueries.yml
@@ -193,7 +193,7 @@ services:
         command:
             - '-extend.query-path=/etc/postgres_exporter/postgresslavequeries.yml'
         environment:
-            - DATA_SOURCE_NAME=postgresql://{{ postgres_exporter_user }}:{{ postgres_exporter_password }}@{{ groups['postgresql-slave'][0]}}:{{ postgres_exporter_postgres_port }}/postgres?sslmode=disable
+            - DATA_SOURCE_NAME=postgresql://{{ postgres_exporter_user }}:{{ postgres_exporter_password }}@{{ groups['postgresql-slave']}}:{{ postgres_exporter_postgres_port }}/postgres?sslmode=disable
         configs:
             - source: postgresslavequeries.yml
               target: /etc/postgres_exporter/postgresslavequeries.yml
