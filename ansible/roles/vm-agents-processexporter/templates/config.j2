@@ -55,3 +55,24 @@ process_names:
     cmdline:
     - .+analytic.+
 {% endif %}
+{% if hostvars[inventory_hostname]['ansible_default_ipv4']['address'] in groups['learner-ps'] %}
+  - name: "learnerservice"
+    comm:
+    - java
+    cmdline:
+    - .+tomcat.+
+{% endif %}
+{% if hostvars[inventory_hostname]['ansible_default_ipv4']['address'] in groups['redis-ps'] %}
+  - name: "redis"
+    comm:
+    - java
+    cmdline:
+    - .+redis.+
+{% endif %}
+{% if hostvars[inventory_hostname]['ansible_default_ipv4']['address'] in groups['search-ps'] %}
+  - name: "searchservice"
+    comm:
+    - java
+    cmdline:
+    - .+search.+
+{% endif %}
