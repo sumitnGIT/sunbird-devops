@@ -104,6 +104,9 @@ kong_admin_groups:
 # List the consumers need to be absent as state: absent
 # This role will not update / delete consumers not listed here
 kong_consumers:
+  - username: temporary-api-credentials
+    groups: "{{ kong_all_consumer_groups }}"
+    state: present
   - username: api-management-test-user
     groups: "{{ kong_all_consumer_groups }}"
     state: present
