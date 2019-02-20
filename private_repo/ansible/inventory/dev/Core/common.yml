@@ -69,8 +69,7 @@ monitor_alerts_mail_from_email:
 # NOT MANDATORY VARS
 
 api_proxy_name: "{{proto}}://api.{{proxy_server_name}}"    # Domain name on which device register and other api's will be accessed
-sunbird_app_name: "{{env}}"
-ansible_ssh_private_key_file: 
+sunbird_app_name: "{{env}}" 
 sunbird_env:  "{{env}}"
 sunbird_ekstep_api_base_url: "https://{{ekstep_s3_env}}.ekstep.in/api"   #API base URL of the Ekstep environment. Use `https://qa.ekstep.in/api` for non-prod deployments, and use `https://api.ekstep.in/` for prod deployment.
 sunbird_ekstep_proxy_base_url: "https://{{ekstep_s3_env}}.ekstep.in/"     #Base URL of the Ekstep environment. Use `https://qa.ekstep.in/` for non-prod deployments, and `https://community.ekstep.in/` for prod deployment.
