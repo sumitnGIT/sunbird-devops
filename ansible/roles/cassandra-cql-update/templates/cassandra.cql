@@ -344,7 +344,7 @@ drop index inx_org_status;
 ALTER TABLE sunbird.organisation DROP status ;
 ALTER TABLE sunbird.organisation ADD status int;
 CREATE INDEX inx_org_status ON sunbird.organisation (status);
-INSERT INTO sunbird.organisation(id , isRootOrg , isDefault, status) values('ORG_001' , true , true, 1);
+
 
 // add isdeleted field to user table -- July 31,2017
 ALTER TABLE sunbird.user ADD isDeleted boolean;
@@ -502,11 +502,7 @@ CREATE TABLE IF NOT EXISTS sunbird.skills(id text,skills list<text>, PRIMARY KEY
 ALTER TABLE sunbird.organisation ADD orgTypeId text;
 
 //Announcement apis -27th Oct 
-{% if groups['cassandra-2'] is defined %}
-CREATE KEYSPACE IF NOT EXISTS sunbirdplugin WITH REPLICATION = { 'class' : 'NetworkTopologyStrategy', 'datacenter1' : 2 };
-{% else %}
-CREATE KEYSPACE IF NOT EXISTS sunbirdplugin WITH REPLICATION = {'class':'SimpleStrategy','replication_factor':1};
-{% endif %}
+CREATE KEYSPACE IF NOT EXISTS sunbirdplugin WITH replication = {'class':'SimpleStrategy','replication_factor':1};
 //CREATE TYPE IF NOT EXISTS sunbirdplugin.attachment (id text,filename text,mimetype text);
 CREATE TABLE sunbirdplugin.announcement (id text,userid text,sourceid text,details map<text, text>,links list<text>,attachments list<text>,target text,sentcount int,priority text,expiry text,status text,createddate text,updateddate text, PRIMARY KEY (id));
 CREATE TABLE sunbirdplugin.attachment (id text,file text,filename text,mimetype text,createdby text,status text,createddate text, PRIMARY KEY (id));
@@ -568,3 +564,4 @@ ALTER TABLE sunbird.geo_location ADD userCountTTL text;
 // adding new column in client-info to save the channel
 ALTER TABLE sunbird.client_info ADD channel text;
 CREATE INDEX inx_ci_clientchannel ON sunbird.client_info(channel);
+
