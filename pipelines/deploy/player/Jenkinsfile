@@ -43,25 +43,10 @@ node() {
                         // For custom urls, create jenkins parameter as portalGitUrl
                         def sunbirdPortalUrl = params.portalGitUrl ?: 'https://github.com/Sunbird-Ed/SunbirdEd-portal.git'
                         checkout([$class: 'GitSCM', branches: [[name: "$commitHash"]], userRemoteConfigs: [[url: "$sunbirdPortalUrl"]]])
-                        sh ("docker run --rm -v /etc/passwd:/etc/passwd:ro -v `pwd`:/var/lib/jenkins -w /var/lib/jenkins -uroot circleci/node:8.11.2-stretch sh ./build-cdn.sh ${cdnUrl} ${commitHash} ")
+                        sh ("docker run --rm  -v `pwd`:/var/lib/jenkins -w /var/lib/jenkins -ujenkins sunbird/build:node-8.11-stretch sh ./build-cdn.sh ${cdnUrl} ${commitHash} ")
                     }
-                    // Uploading cdn assets to blob
-                    ansiblePlaybook = "$currentWs/ansible/assets-upload.yml"
-                    ansibleExtraArgs = "--extra-vars assets=$currentWs/sunbird-portal/src/app/dist --vault-password-file /var/lib/jenkins/secrets/vault-pass"
-                    values.put('ansiblePlaybook', ansiblePlaybook)
-                    values.put('ansibleExtraArgs', ansibleExtraArgs)
-                    ansible_playbook_run(values)
                 }
             }
-        }
-        stage('deploy') {
-            ansiblePlaybook = "$currentWs/ansible/deploy.yml"
-            ansibleExtraArgs = "--tags \"stack-sunbird\" --extra-vars \"hub_org=$hub_org image_name=$values.image_name image_tag=$values.image_tag service_name=player deploy_stack=True\" --vault-password-file /var/lib/jenkins/secrets/vault-pass"
-            values.put('ansiblePlaybook', ansiblePlaybook)
-            values.put('ansibleExtraArgs', ansibleExtraArgs)
-            ansible_playbook_run(values)
-            archiveArtifacts 'metadata.json'
-            currentBuild.description = "${values.image_tag}"
         }
     }
     catch (err) {
