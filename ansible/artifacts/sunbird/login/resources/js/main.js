@@ -4,10 +4,20 @@
 		document.body.classList.add(tenant);
 		if(tenant==='space')
 		{
-			document.getElementById('kc-locale-dropdown').classList.add('hidedropdown');
-			document.getElementById('selfSingUp').classList.add('hidegooglesignin');
-			document.getElementById('login').classList.add('societalbtn');
-			document.getElementById('loginbox').classList.add('societallogin');
+			var dropdown = document.getElementById('kc-locale-dropdown');
+			if(dropdown){
+			dropdown.classList.add('hidedropdown');
+		    }
+			// document.getElementById('selfSingUp').classList.add('hidegooglesignin');
+			var login = document.getElementById('login');
+        if(login) {
+			login.classList.add('societalbtn');
+		}			
+		var loginbox = document.getElementById('loginbox');
+         if(loginbox){
+			 loginbox.classList.add('societallogin');
+		 }			 
+
 		}
     }, false);
 })(); 
